@@ -8,8 +8,8 @@ import java.util.List;
  */
 public interface DaoList<T>{
     public List<T> loadAll();
-    public String insert() throws Exceptions;
-    public String update()throws Exceptions;
-    public String Delete()throws Exceptions;
-    public T getData(T t)throws Exceptions;
+    public String insert() throws Exception;
+    public String update()throws Exception;
+    public String Delete()throws Exception;
+    public T getData(T t)throws Exception;
 }
