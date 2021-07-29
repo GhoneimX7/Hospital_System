@@ -62,8 +62,13 @@ public class UsersDao extends Dao implements DaoList <UsersVo> {
                     usersVo.setUsersType(usersType);
                     
                 }
+                rs.close();
+                ps.close();
             }catch(Exception ex){
                 
+            }
+            finally{
+                closeConnection(con);
             }
             return usersVo;
     }
