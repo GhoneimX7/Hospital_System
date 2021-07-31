@@ -6,18 +6,16 @@ import javax.swing.JOptionPane;
 
 public class Dao {
 
-    public  Connection getConnection() throws Exception {
+    public Connection getConnection() throws Exception {
         Class.forName("com.mysql.jdbc.Driver");
-        System.out.println("Hello!");
         Connection con = DriverManager.getConnection("jdbc:mysql://hospitalprojectdb.mysql.database.azure.com/hospital_system", "root123@hospitalprojectdb", "admin123@123");
-        System.out.println("Hello!");
         if (con != null) {
             return con;
         }
         return null;
     }
 
-    public void closeConnection(Connection  con) throws Exception {
+    public void closeConnection(Connection con) throws Exception {
         if (con != null) {
             con.close();
         }

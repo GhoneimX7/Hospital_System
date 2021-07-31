@@ -1,8 +1,7 @@
-
 package com.azhar.hospital.db.type;
 
 public enum UsersType {
-    ADMIN(1,"admin"),DOCTOR(2,"doctor");
+    ADMIN(1, "admin"), DOCTOR(2, "doctor");
     private int id;
 
     public int getId() {
@@ -21,15 +20,18 @@ public enum UsersType {
         this.type = type;
     }
     private String type;
-    private UsersType(int id ,String type){
-    this.id=id;
-    this.type=type;
+
+    private UsersType(int id, String type) {
+        this.id = id;
+        this.type = type;
     }
-    public static UsersType getUserTypeById(int id){
-    for(UsersType usertype:UsersType.values()){
-    if(usertype.getId() ==id){
-    return usertype;
-    }
-    }return null;
+
+    public static UsersType getUserTypeById(int id) {
+        for (UsersType usertype : UsersType.values()) {
+            if (usertype.getId() == id) {
+                return usertype;
+            }
+        }
+        return null;
     }
 }
