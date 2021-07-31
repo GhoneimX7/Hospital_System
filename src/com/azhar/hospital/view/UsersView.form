@@ -55,7 +55,7 @@
                       <Component id="txtId" max="32767" attributes="0"/>
                       <Component id="txtUserName" max="32767" attributes="0"/>
                       <Component id="txtPassword" max="32767" attributes="0"/>
-                      <Component id="jComboBox1" pref="197" max="32767" attributes="0"/>
+                      <Component id="cUserType" pref="197" max="32767" attributes="0"/>
                       <Component id="txtFirstName" max="32767" attributes="0"/>
                       <Component id="txtFatherName" max="32767" attributes="0"/>
                       <Component id="txtMobile" max="32767" attributes="0"/>
@@ -95,7 +95,7 @@
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="1" attributes="0">
                       <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
-                      <Component id="jComboBox1" min="-2" max="-2" attributes="0"/>
+                      <Component id="cUserType" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
@@ -150,7 +150,7 @@
             <Property name="text" type="java.lang.String" value="User Type"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JComboBox" name="jComboBox1">
+        <Component class="javax.swing.JComboBox" name="cUserType">
           <Properties>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
               <StringArray count="3">
@@ -160,6 +160,9 @@
               </StringArray>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cUserTypeActionPerformed"/>
+          </Events>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
           </AuxValues>

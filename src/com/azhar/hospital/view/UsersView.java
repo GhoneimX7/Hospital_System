@@ -6,6 +6,7 @@
 package com.azhar.hospital.view;
 
 import com.azhar.hospital.db.type.UsersType;
+import com.azhar.hospital.db.vo.UserDetailsVo;
 import com.azhar.hospital.db.vo.UsersVo;
 
 /**
@@ -38,7 +39,7 @@ public class UsersView extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         txtPassword = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        cUserType = new javax.swing.JComboBox<>();
         jLabel5 = new javax.swing.JLabel();
         txtFirstName = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
@@ -70,7 +71,12 @@ public class UsersView extends javax.swing.JFrame {
 
         jLabel4.setText("User Type");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "ADMIN", "DOCTOR", "NURSE" }));
+        cUserType.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "ADMIN", "DOCTOR", "NURSE" }));
+        cUserType.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cUserTypeActionPerformed(evt);
+            }
+        });
 
         jLabel5.setText("First Name");
 
@@ -110,7 +116,7 @@ public class UsersView extends javax.swing.JFrame {
                     .addComponent(txtId)
                     .addComponent(txtUserName)
                     .addComponent(txtPassword)
-                    .addComponent(jComboBox1, 0, 197, Short.MAX_VALUE)
+                    .addComponent(cUserType, 0, 197, Short.MAX_VALUE)
                     .addComponent(txtFirstName)
                     .addComponent(txtFatherName)
                     .addComponent(txtMobile))
@@ -141,7 +147,7 @@ public class UsersView extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel4)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cUserType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
@@ -187,13 +193,25 @@ public class UsersView extends javax.swing.JFrame {
         int id = Integer.valueOf(txtId.getText());
         String username = txtUserName.getText();
         String password = txtPassword.getText();
-        UsersType usersType = UsersType.getUserTypeById(Integer.valueOf(txtId.getText()));
+        UsersType usersType = UsersType.getUserTypeById(cUserType.getSelectedIndex());
         UsersVo usersVo = new UsersVo();
         usersVo.setId(id);
         usersVo.setUserName(username);
         usersVo.setPassword(password);
         usersVo.setUsersType(usersType);
+        String firstName = txtFirstName.getText();
+        String fatherName = txtFatherName.getText();
+        String mobile = txtMobile.getText();
+        UserDetailsVo userDetailsVo = new UserDetailsVo();
+        userDetailsVo.setUsersVo(usersVo);
+        userDetailsVo.setFirstName(firstName);
+        userDetailsVo.setFatherName(fatherName);
+        userDetailsVo.setMobile(mobile);
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void cUserTypeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cUserTypeActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cUserTypeActionPerformed
 
     /**
      * @param args the command line arguments
@@ -231,8 +249,8 @@ public class UsersView extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox<String> cUserType;
     private javax.swing.JButton jButton1;
-    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
