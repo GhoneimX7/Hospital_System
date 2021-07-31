@@ -5,6 +5,9 @@
  */
 package com.azhar.hospital.view;
 
+import com.azhar.hospital.db.type.UsersType;
+import com.azhar.hospital.db.vo.UsersVo;
+
 /**
  *
  * @author User
@@ -181,7 +184,15 @@ public class UsersView extends javax.swing.JFrame {
     }//GEN-LAST:event_txtFatherNameActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
+        int id = Integer.valueOf(txtId.getText());
+        String username = txtUserName.getText();
+        String password = txtPassword.getText();
+        UsersType usersType = UsersType.getUserTypeById(Integer.valueOf(txtId.getText()));
+        UsersVo usersVo = new UsersVo();
+        usersVo.setId(id);
+        usersVo.setUserName(username);
+        usersVo.setPassword(password);
+        usersVo.setUsersType(usersType);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
