@@ -34,4 +34,13 @@ public enum UsersType {
         }
         return null;
     }
+    
+    public static UsersType getUserTypeByType(String type) {
+        for (UsersType usertype : UsersType.values()) {
+            if (usertype.getType() == type) {
+                return usertype;
+            }
+        }
+        return null;
+    }
 }
