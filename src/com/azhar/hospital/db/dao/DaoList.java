@@ -10,11 +10,11 @@ public interface DaoList<T> {
 
     public List<T> loadAll();
 
-    public boolean insert(T t) throws Exception;
+    public int insert(T t) throws Exception;
 
-    public boolean update(T t) throws Exception;
+    public int update(T t) throws Exception;
 
-    public boolean Delete(T t) throws Exception;
+    public int Delete(T t) throws Exception;
 
     public T getData(T t) throws Exception;
 }

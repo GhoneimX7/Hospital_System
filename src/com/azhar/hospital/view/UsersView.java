@@ -193,7 +193,7 @@ public class UsersView extends javax.swing.JFrame {
         int id = Integer.valueOf(txtId.getText());
         String username = txtUserName.getText();
         String password = txtPassword.getText();
-        UsersType usersType = UsersType.getUserTypeByType(cUserType.getSelectedItem().toString());
+        UsersType usersType = UsersType.getUserTypeByType(cUserType.getSelectedItem().toString().toLowerCase());
         UsersVo usersVo = new UsersVo();
         usersVo.setId(id);
         usersVo.setUserName(username);

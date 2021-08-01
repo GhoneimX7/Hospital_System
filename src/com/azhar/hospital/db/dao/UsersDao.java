@@ -29,33 +29,34 @@ public class UsersDao extends Dao implements DaoList <UsersVo> {
     }
 
     @Override
-    public boolean insert(UsersVo uv) throws Exception {
+    public int insert(UsersVo uv) throws Exception {
         Connection con = null;
-        boolean isInsert = false;
+        int count = 0;
         try {
             con = getConnection();
-            String sql = "INSERT INTO users(USER_NAME,PASSWORD,USER_TYPE) VALUES(?,?,?)";
+            String sql = "INSERT INTO users(USER_NAME,PASSWORD,USER_TYPE,ID) VALUES(?,?,?,?)";
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setString(1, uv.getUserName());
             ps.setString(2, uv.getPassword());
             ps.setInt(3, uv.getUsersType().getId());
-            isInsert = ps.execute();
+            ps.setInt(4, uv.getId());
+            count = ps.executeUpdate();
             ps.close();
         } catch (Exception ex) {
             
         } finally {
             closeConnection(con);
         }
-        return isInsert;
+        return count;
     }
 
     @Override
-    public boolean update(UsersVo uv) throws Exception {
+    public int update(UsersVo uv) throws Exception {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public boolean  Delete(UsersVo uv) throws Exception {
+    public int  Delete(UsersVo uv) throws Exception {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

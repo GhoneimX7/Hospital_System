@@ -30,9 +30,9 @@ public class UserDetailsDao extends Dao implements DaoList<UserDetailsVo> {
     }
 
     @Override
-    public boolean insert(UserDetailsVo udv) throws Exception {
+    public int insert(UserDetailsVo udv) throws Exception {
         Connection con = null;
-        boolean isInsert = false;
+        int count = 0;
         try {
             con = getConnection();
             String sql = "INSERT INTO users_details (USER_ID, FIRST_NAME, FATHER_NAME, MOBILE) VALUES(?, ?, ?, ?)";
@@ -41,23 +41,23 @@ public class UserDetailsDao extends Dao implements DaoList<UserDetailsVo> {
             ps.setString(2, udv.getFirstName());
             ps.setString(3, udv.getFatherName());
             ps.setString(4, udv.getMobile());
-            isInsert = ps.execute();
+            count = ps.executeUpdate();
             ps.close();
         } catch (Exception ex) {
 
         } finally {
             closeConnection(con);
         }
-        return isInsert;
+        return count;
     }
 
     @Override
-    public boolean update(UserDetailsVo t) throws Exception {
+    public int update(UserDetailsVo t) throws Exception {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public boolean Delete(UserDetailsVo t) throws Exception {
+    public int Delete(UserDetailsVo t) throws Exception {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
