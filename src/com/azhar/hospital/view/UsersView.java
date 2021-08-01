@@ -77,6 +77,7 @@ public class UsersView extends javax.swing.JFrame {
         jLabel4.setText("User Type");
 
         cUserType.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "admin", "doctor", "nurse" }));
+        cUserType.setSelectedIndex(-1);
         cUserType.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cUserTypeActionPerformed(evt);
@@ -218,6 +219,7 @@ public class UsersView extends javax.swing.JFrame {
             int userDetailsCount = UserDetailsDao.getInstance().insert(userDetailsVo);
             if (usersCount == 1 && userDetailsCount == 1) {
                 JOptionPane.showMessageDialog(null, "Insert Successfully!");
+                reset();
             } else {
                 JOptionPane.showMessageDialog(null, "Insert not Successfully!");
                 System.out.println(usersCount);
@@ -232,7 +234,17 @@ public class UsersView extends javax.swing.JFrame {
     private void cUserTypeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cUserTypeActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_cUserTypeActionPerformed
-
+    
+    protected void reset() {
+        txtId.setText("");
+        txtUserName.setText("");
+        txtFirstName.setText("");
+        txtFatherName.setText("");
+        txtMobile.setText("");
+        txtPassword.setText("");
+        cUserType.setSelectedIndex(-1);
+    }
+    
     /**
      * @param args the command line arguments
      */
