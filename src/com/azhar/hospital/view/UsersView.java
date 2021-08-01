@@ -5,9 +5,14 @@
  */
 package com.azhar.hospital.view;
 
+import com.azhar.hospital.db.dao.UserDetailsDao;
+import com.azhar.hospital.db.dao.UsersDao;
 import com.azhar.hospital.db.type.UsersType;
 import com.azhar.hospital.db.vo.UserDetailsVo;
 import com.azhar.hospital.db.vo.UsersVo;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -207,6 +212,21 @@ public class UsersView extends javax.swing.JFrame {
         userDetailsVo.setFirstName(firstName);
         userDetailsVo.setFatherName(fatherName);
         userDetailsVo.setMobile(mobile);
+
+        try {
+            int usersCount = UsersDao.getInstance().insert(usersVo);
+            int userDetailsCount = UserDetailsDao.getInstance().insert(userDetailsVo);
+            if (usersCount == 1 && userDetailsCount == 1) {
+                JOptionPane.showMessageDialog(null, "Insert Successfully!");
+            } else {
+                JOptionPane.showMessageDialog(null, "Insert not Successfully!");
+                System.out.println(usersCount);
+                System.out.println(userDetailsCount);
+
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(UsersView.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void cUserTypeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cUserTypeActionPerformed
