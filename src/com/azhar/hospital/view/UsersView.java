@@ -26,6 +26,7 @@ public class UsersView extends javax.swing.JFrame {
      */
     public UsersView() {
         initComponents();
+        this.setLocationRelativeTo(null);
     }
 
     /**
@@ -199,9 +200,8 @@ public class UsersView extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         boolean isTextEmpty = Validation.isEmpty(txtId.getText(), txtUserName.getText(), txtPassword.getText(), txtFirstName.getText(), txtFatherName.getText(), txtMobile.getText());
         boolean isEmpty = Validation.isEmpty(cUserType.getSelectedIndex());
-        boolean isDigit = Validation.isDigit(txtId.getText());
-        // Mobile must include digits !?
-        boolean isText = Validation.isText(txtId.getText(), txtUserName.getText(), txtPassword.getText(), txtFirstName.getText(), txtFatherName.getText(), txtMobile.getText());
+        boolean isDigit = Validation.isDigit(txtId.getText(), txtMobile.getText());
+        boolean isText = Validation.isText(txtId.getText(), txtUserName.getText(), txtPassword.getText(), txtFirstName.getText(), txtFatherName.getText());
         if (!isDigit || !isText) {
             JOptionPane.showMessageDialog(null, "Please enter valid data");
             return;
