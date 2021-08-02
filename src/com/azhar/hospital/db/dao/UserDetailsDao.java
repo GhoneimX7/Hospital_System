@@ -36,8 +36,6 @@ public class UserDetailsDao extends Dao implements DaoList<UserDetailsVo> {
         int count = 0;
         try {
             con = getConnection();
-
-            con = getConnection();
             con.setAutoCommit(false);
             String userSql = "INSERT INTO users(USER_NAME,PASSWORD,USER_TYPE,ID) VALUES(?,?,?,?)";
             ps = con.prepareStatement(userSql);
@@ -73,12 +71,42 @@ public class UserDetailsDao extends Dao implements DaoList<UserDetailsVo> {
     }
 
     @Override
-    public int Delete(UserDetailsVo t) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public int Delete(UserDetailsVo udv) throws Exception {
+
+        Connection con = null;
+        PreparedStatement ps = null;
+        int count = 0;
+        try {
+            con = getConnection();
+            con.setAutoCommit(false);
+            String userDetailsSql = "DELETE FROM users_details WHERE USER_ID=?";
+            ps = con.prepareStatement(userDetailsSql);
+            ps.setInt(1, udv.getUsersVo().getId());
+            ps.executeUpdate();
+
+            String userSql = "DELETE FROM users WHERE ID=?";
+            ps = con.prepareStatement(userSql);
+            ps.setInt(1, udv.getUsersVo().getId());
+            ps.executeUpdate();
+            con.commit();   
+            count = 1;
+
+        } catch (Exception ex) {
+            con.rollback();
+        } finally {
+            ps.close();
+            closeConnection(con);
+        }
+        return count;
     }
 
     @Override
     public UserDetailsVo getData(UserDetailsVo t) throws Exception {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public UserDetailsVo getDataById(int id) throws Exception {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

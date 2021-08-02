@@ -11,13 +11,16 @@ import java.util.List;
  *
  * @author fastox
  */
-public class UsersDao extends Dao implements DaoList <UsersVo> {
+public class UsersDao extends Dao implements DaoList<UsersVo> {
+
     private static UsersDao usersDao;
+
     private UsersDao() {
-        
+
     }
+
     public static UsersDao getInstance() {
-        if (usersDao==null) {
+        if (usersDao == null) {
             usersDao = new UsersDao();
         }
         return usersDao;
@@ -43,7 +46,7 @@ public class UsersDao extends Dao implements DaoList <UsersVo> {
             count = ps.executeUpdate();
             ps.close();
         } catch (Exception ex) {
-            
+
         } finally {
             closeConnection(con);
         }
@@ -56,37 +59,66 @@ public class UsersDao extends Dao implements DaoList <UsersVo> {
     }
 
     @Override
-    public int  Delete(UsersVo uv) throws Exception {
+    public int Delete(UsersVo uv) throws Exception {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public UsersVo getData(UsersVo uv) throws Exception {
-            Connection con = null;
-            UsersVo usersVo = null;
-            ResultSet rs = null;
-            try{
-                con = getConnection();
-                String sql = "SELECT * FROM users WHERE USER_NAME='" + uv.getUserName() + "' AND PASSWORD='" + uv.getPassword() + "'";
-                PreparedStatement ps = con.prepareCall(sql);
-                rs = ps.executeQuery();
-                while (rs.next()){
-                    usersVo = new UsersVo();
-                    usersVo.setId(rs.getInt("id"));
-                    usersVo.setUserName(rs.getString("USER_NAME"));
-                    usersVo.setPassword(rs.getString("PASSWORD"));
-                    UsersType usersType = UsersType.getUserTypeById(rs.getInt("USER_TYPE"));
-                    usersVo.setUsersType(usersType);
-                    
-                }
-                rs.close();
-                ps.close();
-            }catch(Exception ex){
-                
+        Connection con = null;
+        UsersVo usersVo = null;
+        ResultSet rs = null;
+        try {
+            con = getConnection();
+            String sql = "SELECT * FROM users WHERE USER_NAME='" + uv.getUserName() + "' AND PASSWORD='" + uv.getPassword() + "'";
+            PreparedStatement ps = con.prepareCall(sql);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                usersVo = new UsersVo();
+                usersVo.setId(rs.getInt("id"));
+                usersVo.setUserName(rs.getString("USER_NAME"));
+                usersVo.setPassword(rs.getString("PASSWORD"));
+                UsersType usersType = UsersType.getUserTypeById(rs.getInt("USER_TYPE"));
+                usersVo.setUsersType(usersType);
+
             }
-            finally{
-                closeConnection(con);
+            rs.close();
+            ps.close();
+        } catch (Exception ex) {
+
+        } finally {
+            closeConnection(con);
+        }
+        return usersVo;
+    }
+
+    @Override
+    public UsersVo getDataById(int id) throws Exception {
+        Connection con = null;
+        UsersVo usersVo = null;
+        ResultSet rs = null;
+        try {
+            con = getConnection();
+            String sql = "SELECT * FROM users WHERE ID=?";
+            PreparedStatement ps = con.prepareCall(sql);
+            ps.setInt(1, id);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                usersVo = new UsersVo();
+                usersVo.setId(rs.getInt("id"));
+                usersVo.setUserName(rs.getString("USER_NAME"));
+                usersVo.setPassword(rs.getString("PASSWORD"));
+                UsersType usersType = UsersType.getUserTypeById(rs.getInt("USER_TYPE"));
+                usersVo.setUsersType(usersType);
+
             }
-            return usersVo;
+            rs.close();
+            ps.close();
+        } catch (Exception ex) {
+
+        } finally {
+            closeConnection(con);
+        }
+        return usersVo;
     }
 }
