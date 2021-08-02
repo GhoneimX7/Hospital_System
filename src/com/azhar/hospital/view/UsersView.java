@@ -10,6 +10,7 @@ import com.azhar.hospital.db.dao.UsersDao;
 import com.azhar.hospital.db.type.UsersType;
 import com.azhar.hospital.db.vo.UserDetailsVo;
 import com.azhar.hospital.db.vo.UsersVo;
+import com.azhar.hospital.validation.Validation;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -196,6 +197,12 @@ public class UsersView extends javax.swing.JFrame {
     }//GEN-LAST:event_txtFatherNameActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        boolean isTextEmpty = Validation.isEmpty(txtId.getText(), txtUserName.getText(), txtPassword.getText(), txtFirstName.getText(), txtFatherName.getText(), txtMobile.getText());
+        boolean isEmpty = Validation.isEmpty(cUserType.getSelectedIndex());
+        if (isEmpty || isTextEmpty) {
+            JOptionPane.showMessageDialog(null, "Please fill all required inputs");
+            return;
+        }
         int id = Integer.valueOf(txtId.getText());
         String username = txtUserName.getText();
         String password = txtPassword.getText();
@@ -234,7 +241,7 @@ public class UsersView extends javax.swing.JFrame {
     private void cUserTypeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cUserTypeActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_cUserTypeActionPerformed
-    
+
     protected void reset() {
         txtId.setText("");
         txtUserName.setText("");
@@ -244,7 +251,7 @@ public class UsersView extends javax.swing.JFrame {
         txtPassword.setText("");
         cUserType.setSelectedIndex(-1);
     }
-    
+
     /**
      * @param args the command line arguments
      */
