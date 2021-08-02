@@ -24,4 +24,21 @@ public class Validation {
         return false;
     }
 
+    public static boolean isDigit(String... text) {
+        for (String s : text) {
+            if (!s.matches("[0-9]+")) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public static boolean isText(String... text) {
+        for (String s : text) {
+            if (!s.matches("[a-z]+")) {
+                return false;
+            }
+        }
+        return true;
+    }
 }
