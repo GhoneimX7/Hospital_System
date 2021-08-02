@@ -201,7 +201,7 @@ public class UsersView extends javax.swing.JFrame {
         boolean isTextEmpty = Validation.isEmpty(txtId.getText(), txtUserName.getText(), txtPassword.getText(), txtFirstName.getText(), txtFatherName.getText(), txtMobile.getText());
         boolean isEmpty = Validation.isEmpty(cUserType.getSelectedIndex());
         boolean isDigit = Validation.isDigit(txtId.getText(), txtMobile.getText());
-        boolean isText = Validation.isText(txtId.getText(), txtUserName.getText(), txtPassword.getText(), txtFirstName.getText(), txtFatherName.getText());
+        boolean isText = Validation.isText(txtUserName.getText(), txtPassword.getText(), txtFirstName.getText(), txtFatherName.getText());
         if (!isDigit || !isText) {
             JOptionPane.showMessageDialog(null, "Please enter valid data");
             return;
@@ -229,15 +229,13 @@ public class UsersView extends javax.swing.JFrame {
         userDetailsVo.setMobile(mobile);
 
         try {
-            int usersCount = UsersDao.getInstance().insert(usersVo);
-            int userDetailsCount = UserDetailsDao.getInstance().insert(userDetailsVo);
-            if (usersCount == 1 && userDetailsCount == 1) {
+            // int usersCount = UsersDao.getInstance().insert(usersVo);
+            int count = UserDetailsDao.getInstance().insert(userDetailsVo);
+            if (count == 1) {
                 JOptionPane.showMessageDialog(null, "Insert Successfully!");
                 reset();
             } else {
                 JOptionPane.showMessageDialog(null, "Insert not Successfully!");
-                System.out.println(usersCount);
-                System.out.println(userDetailsCount);
 
             }
         } catch (Exception ex) {
