@@ -1,9 +1,11 @@
 package com.azhar.hospital.db.dao;
 
 import com.azhar.hospital.db.vo.UserDetailsVo;
+import com.azhar.hospital.view.UsersView;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.util.List;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -45,12 +47,13 @@ public class UserDetailsDao extends Dao implements DaoList<UserDetailsVo> {
             ps.setInt(4, udv.getUsersVo().getId());
             ps.executeUpdate();
 
-            String userDetailsSql = "INSERT INTO users_details (USER_ID, FIRST_NAME, FATHER_NAME, MOBILE) VALUES(?, ?, ?, ?)";
+            String userDetailsSql = "INSERT INTO users_details (USER_ID, FIRST_NAME, FATHER_NAME, MOBILE,IMAGE) VALUES(?, ?, ?, ?, ?)";
             ps = con.prepareStatement(userDetailsSql);
             ps.setInt(1, udv.getUsersVo().getId());
             ps.setString(2, udv.getFirstName());
             ps.setString(3, udv.getFatherName());
             ps.setString(4, udv.getMobile());
+            ps.setBytes(5, UsersView.imageByte);
             ps.executeUpdate();
             con.commit();
 
@@ -81,12 +84,13 @@ public class UserDetailsDao extends Dao implements DaoList<UserDetailsVo> {
             ps.setInt(4, udv.getUsersVo().getId());
             ps.executeUpdate();
 
-            String userDetailsSql = "UPDATE users_details SET FIRST_NAME=?, FATHER_NAME=?, MOBILE=? WHERE USER_ID=?";
+            String userDetailsSql = "UPDATE users_details SET FIRST_NAME=?, FATHER_NAME=?, MOBILE=?, IMAGE=? WHERE USER_ID=?";
             ps = con.prepareStatement(userDetailsSql);
             ps.setString(1, udv.getFirstName());
             ps.setString(2, udv.getFatherName());
             ps.setString(3, udv.getMobile());
-            ps.setInt(4, udv.getUsersVo().getId());
+            ps.setBytes(4,UsersView.imageByte);
+            ps.setInt(5, udv.getUsersVo().getId());
             ps.executeUpdate();
             con.commit();
 
