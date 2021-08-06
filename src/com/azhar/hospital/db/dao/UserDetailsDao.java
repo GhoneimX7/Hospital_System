@@ -66,8 +66,39 @@ public class UserDetailsDao extends Dao implements DaoList<UserDetailsVo> {
     }
 
     @Override
-    public int update(UserDetailsVo t) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public int update(UserDetailsVo udv) throws Exception {
+        Connection con = null;
+        PreparedStatement ps = null;
+        int count = 0;
+        try {
+            con = getConnection();
+            con.setAutoCommit(false);
+            String userSql = "UPDATE USERS SET USER_NAME=?,PASSWORD=?,USER_TYPE=? WHERE ID=?";
+            ps = con.prepareStatement(userSql);
+            ps.setString(1, udv.getUsersVo().getUserName());
+            ps.setString(2, udv.getUsersVo().getPassword());
+            ps.setInt(3, udv.getUsersVo().getUsersType().getId());
+            ps.setInt(4, udv.getUsersVo().getId());
+            ps.executeUpdate();
+
+            String userDetailsSql = "UPDATE users_details SET FIRST_NAME=?, FATHER_NAME=?, MOBILE=? WHERE USER_ID=?";
+            ps = con.prepareStatement(userDetailsSql);
+            ps.setString(1, udv.getFirstName());
+            ps.setString(2, udv.getFatherName());
+            ps.setString(3, udv.getMobile());
+            ps.setInt(4, udv.getUsersVo().getId());
+            ps.executeUpdate();
+            con.commit();
+
+            count = 1;
+
+        } catch (Exception ex) {
+            con.rollback();
+        } finally {
+            ps.close();
+            closeConnection(con);
+        }
+        return count;
     }
 
     @Override
@@ -88,7 +119,7 @@ public class UserDetailsDao extends Dao implements DaoList<UserDetailsVo> {
             ps = con.prepareStatement(userSql);
             ps.setInt(1, udv.getUsersVo().getId());
             ps.executeUpdate();
-            con.commit();   
+            con.commit();
             count = 1;
 
         } catch (Exception ex) {

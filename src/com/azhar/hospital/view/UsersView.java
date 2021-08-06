@@ -55,6 +55,7 @@ public class UsersView extends javax.swing.JFrame {
         txtMobile = new javax.swing.JTextField();
         btnDelete = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
+        btnUpdate = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -113,6 +114,13 @@ public class UsersView extends javax.swing.JFrame {
             }
         });
 
+        btnUpdate.setText("Edit");
+        btnUpdate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnUpdateActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -137,7 +145,9 @@ public class UsersView extends javax.swing.JFrame {
                     .addComponent(txtFatherName)
                     .addComponent(txtMobile))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 63, Short.MAX_VALUE)
-                .addComponent(btnDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btnDelete, javax.swing.GroupLayout.DEFAULT_SIZE, 81, Short.MAX_VALUE)
+                    .addComponent(btnUpdate, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(22, 22, 22))
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
@@ -161,26 +171,28 @@ public class UsersView extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel3)
-                            .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel4)
+                            .addComponent(cUserType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel5)
+                            .addComponent(txtFirstName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel6)
+                            .addComponent(txtFatherName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel7)
+                            .addComponent(txtMobile, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(39, 39, 39)
-                        .addComponent(btnDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel4)
-                    .addComponent(cUserType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel5)
-                    .addComponent(txtFirstName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel6)
-                    .addComponent(txtFatherName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel7)
-                    .addComponent(txtMobile, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(btnDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnUpdate)))
                 .addContainerGap(71, Short.MAX_VALUE))
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel1Layout.createSequentialGroup()
@@ -287,7 +299,11 @@ public class UsersView extends javax.swing.JFrame {
         userDetailsVo.setMobile(mobile);
 
         try {
-            // int usersCount = UsersDao.getInstance().insert(usersVo);
+            UsersVo uv = UsersDao.getInstance().getDataById(id);
+            if (uv != null) {
+                JOptionPane.showMessageDialog(null, "Id already exists!");
+                return;
+            }
             int count = UserDetailsDao.getInstance().insert(userDetailsVo);
             if (count == 1) {
                 JOptionPane.showMessageDialog(null, "Insert Successfully!");
@@ -299,6 +315,56 @@ public class UsersView extends javax.swing.JFrame {
         } catch (Exception ex) {
             Logger.getLogger(UsersView.class.getName()).log(Level.SEVERE, null, ex);
         }    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
+        boolean isTextEmpty = Validation.isEmpty(txtId.getText(), txtUserName.getText(), txtPassword.getText(), txtFirstName.getText(), txtFatherName.getText(), txtMobile.getText());
+        boolean isEmpty = Validation.isEmpty(cUserType.getSelectedIndex());
+        boolean isDigit = Validation.isDigit(txtId.getText(), txtMobile.getText());
+        boolean isText = Validation.isText(txtUserName.getText(), txtPassword.getText(), txtFirstName.getText(), txtFatherName.getText());
+        if (!isDigit || !isText) {
+            JOptionPane.showMessageDialog(null, "Please enter valid data");
+            return;
+        }
+        if (isEmpty || isTextEmpty) {
+            JOptionPane.showMessageDialog(null, "Please fill all required inputs");
+            return;
+        }
+        int id = Integer.valueOf(txtId.getText());
+        String username = txtUserName.getText();
+        String password = txtPassword.getText();
+        UsersType usersType = UsersType.getUserTypeByType(cUserType.getSelectedItem().toString().toLowerCase());
+        UsersVo usersVo = new UsersVo();
+        usersVo.setId(id);
+        usersVo.setUserName(username);
+        usersVo.setPassword(password);
+        usersVo.setUsersType(usersType);
+        String firstName = txtFirstName.getText();
+        String fatherName = txtFatherName.getText();
+        String mobile = txtMobile.getText();
+        UserDetailsVo userDetailsVo = new UserDetailsVo();
+        userDetailsVo.setUsersVo(usersVo);
+        userDetailsVo.setFirstName(firstName);
+        userDetailsVo.setFatherName(fatherName);
+        userDetailsVo.setMobile(mobile);
+
+        try {
+            UsersVo uv = UsersDao.getInstance().getDataById(id);
+            if (uv == null) {
+                JOptionPane.showMessageDialog(null, "Id not found!");
+                return;
+            }
+            int count = UserDetailsDao.getInstance().update(userDetailsVo);
+            if (count == 1) {
+                JOptionPane.showMessageDialog(null, "Update Successfully!");
+                reset();
+            } else {
+                JOptionPane.showMessageDialog(null, "Update not Successfully!");
+
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(UsersView.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnUpdateActionPerformed
 
     protected void reset() {
         txtId.setText("");
@@ -347,6 +413,7 @@ public class UsersView extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnDelete;
+    private javax.swing.JButton btnUpdate;
     private javax.swing.JComboBox<String> cUserType;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
