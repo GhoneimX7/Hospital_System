@@ -311,6 +311,7 @@ public class UsersView extends javax.swing.JFrame {
         userDetailsVo.setFirstName(firstName);
         userDetailsVo.setFatherName(fatherName);
         userDetailsVo.setMobile(mobile);
+        userDetailsVo.setImage(imageByte);
 
         try {
             UsersVo uv = UsersDao.getInstance().getDataById(id);
@@ -360,6 +361,7 @@ public class UsersView extends javax.swing.JFrame {
         userDetailsVo.setFirstName(firstName);
         userDetailsVo.setFatherName(fatherName);
         userDetailsVo.setMobile(mobile);
+        userDetailsVo.setImage(imageByte);
 
         try {
             UsersVo uv = UsersDao.getInstance().getDataById(id);
@@ -390,9 +392,9 @@ public class UsersView extends javax.swing.JFrame {
             File file2 = new File(ImagePath);
             FileInputStream fis = new FileInputStream(file2);
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
-            byte[] lenfth = new byte[1024];
-            for (int i; (i = fis.read(lenfth)) != -1;) {
-                baos.write(lenfth, 0, i);
+            byte[] length = new byte[1024];
+            for (int i; (i = fis.read(length)) != -1;) {
+                baos.write(length, 0, i);
             }
             imageByte = baos.toByteArray();
         } catch (Exception ex) {

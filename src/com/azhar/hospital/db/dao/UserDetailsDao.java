@@ -1,9 +1,13 @@
 package com.azhar.hospital.db.dao;
 
+import com.azhar.hospital.db.type.UsersType;
 import com.azhar.hospital.db.vo.UserDetailsVo;
+import com.azhar.hospital.db.vo.UsersVo;
 import com.azhar.hospital.view.UsersView;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.HashSet;
 import java.util.List;
 import javax.swing.JOptionPane;
 
@@ -53,7 +57,7 @@ public class UserDetailsDao extends Dao implements DaoList<UserDetailsVo> {
             ps.setString(2, udv.getFirstName());
             ps.setString(3, udv.getFatherName());
             ps.setString(4, udv.getMobile());
-            ps.setBytes(5, UsersView.imageByte);
+            ps.setBytes(5, udv.getImage());
             ps.executeUpdate();
             con.commit();
 
@@ -89,7 +93,7 @@ public class UserDetailsDao extends Dao implements DaoList<UserDetailsVo> {
             ps.setString(1, udv.getFirstName());
             ps.setString(2, udv.getFatherName());
             ps.setString(3, udv.getMobile());
-            ps.setBytes(4,UsersView.imageByte);
+            ps.setBytes(4, udv.getImage());
             ps.setInt(5, udv.getUsersVo().getId());
             ps.executeUpdate();
             con.commit();
@@ -142,7 +146,42 @@ public class UserDetailsDao extends Dao implements DaoList<UserDetailsVo> {
 
     @Override
     public UserDetailsVo getDataById(int id) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Connection con = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        UserDetailsVo userDetailsVo = null;
+        UsersVo usersVo = null;
+        try {
+            con = getConnection();
+        
+            String userSql = "SELECT USERS.ID USERS.USER_NAME, USERS.PASSWORD, USERS.USER_TYPE, USERS_DETAILS.FIRST_NAME, USERS_DETAILS.FATHER_NAME, USERS_DETAILS.MOBILE, USERS_DETAILS.IMAGE FROM USERS INNER JOIN USERS_DETIALS ON USERS.ID = USERS_DETAILS.USER_ID WHERE ID=?";
+            ps = con.prepareStatement(userSql);
+            ps.setInt(1, id);
+            rs = ps.executeQuery();
+            
+            while(rs.next()) {
+                usersVo = new UsersVo();
+                usersVo.setId(rs.getInt("ID"));
+                usersVo.setUserName(rs.getString("USER_NAME"));
+                usersVo.setPassword(rs.getString("PASSWORD"));
+                UsersType usersType = UsersType.getUserTypeById(rs.getInt("ID"));
+                usersVo.setUsersType(usersType);
+                userDetailsVo.setFirstName(rs.getString(("FIRST_NAME")));
+                userDetailsVo.setFatherName(rs.getString("FATHER_NAME"));;
+                userDetailsVo.setMobile(rs.getString("MOBILE"));
+                userDetailsVo.setImage(rs.getBytes("IMAGE"));
+                userDetailsVo.setUsersVo(usersVo);
+            }
+            
+
+   
+        } catch (Exception ex) {
+        } finally {
+            rs.close();
+            ps.close();
+            closeConnection(con);
+        }
+        return userDetailsVo;
     }
 
 }
