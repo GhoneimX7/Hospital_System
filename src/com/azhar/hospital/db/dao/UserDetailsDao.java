@@ -154,20 +154,21 @@ public class UserDetailsDao extends Dao implements DaoList<UserDetailsVo> {
         try {
             con = getConnection();
         
-            String userSql = "SELECT USERS.ID USERS.USER_NAME, USERS.PASSWORD, USERS.USER_TYPE, USERS_DETAILS.FIRST_NAME, USERS_DETAILS.FATHER_NAME, USERS_DETAILS.MOBILE, USERS_DETAILS.IMAGE FROM USERS INNER JOIN USERS_DETIALS ON USERS.ID = USERS_DETAILS.USER_ID WHERE ID=?";
+            String userSql = "SELECT USERS.ID, USERS.USER_NAME, USERS.PASSWORD, USERS.USER_TYPE, USERS_DETAILS.FIRST_NAME, USERS_DETAILS.FATHER_NAME, USERS_DETAILS.MOBILE, USERS_DETAILS.IMAGE FROM USERS INNER JOIN USERS_DETAILS ON USERS.ID = USERS_DETAILS.USER_ID WHERE USERS.ID=?";
             ps = con.prepareStatement(userSql);
             ps.setInt(1, id);
             rs = ps.executeQuery();
             
             while(rs.next()) {
                 usersVo = new UsersVo();
+                userDetailsVo = new UserDetailsVo();
                 usersVo.setId(rs.getInt("ID"));
                 usersVo.setUserName(rs.getString("USER_NAME"));
                 usersVo.setPassword(rs.getString("PASSWORD"));
-                UsersType usersType = UsersType.getUserTypeById(rs.getInt("ID"));
+                UsersType usersType = UsersType.getUserTypeById(rs.getInt("USER_TYPE"));
                 usersVo.setUsersType(usersType);
                 userDetailsVo.setFirstName(rs.getString(("FIRST_NAME")));
-                userDetailsVo.setFatherName(rs.getString("FATHER_NAME"));;
+                userDetailsVo.setFatherName(rs.getString("FATHER_NAME"));
                 userDetailsVo.setMobile(rs.getString("MOBILE"));
                 userDetailsVo.setImage(rs.getBytes("IMAGE"));
                 userDetailsVo.setUsersVo(usersVo);
