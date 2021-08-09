@@ -62,8 +62,28 @@ public class PatientInfoDao extends Dao implements DaoList<PatientInfoVo> {
     }
 
     @Override
-    public int update(PatientInfoVo t) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public int update(PatientInfoVo piv) throws Exception {
+        Connection con = null;
+        PreparedStatement ps = null;
+        int count = 0;
+        try {
+            con = getConnection();
+            String sql = "UPDATE PATIENT_INFO set FIRST_NAME=?, FATHER_NAME=?,MOBILE=?, EMAIL=?, USER_ID=? WHERE ID=?";
+            ps = con.prepareStatement(sql);
+            ps.setString(1, piv.getFirstName());
+            ps.setString(2, piv.getFatherName());
+            ps.setString(3, piv.getMobile());
+            ps.setString(4, piv.getEmail());
+            ps.setInt(5, piv.getUsersVo().getId());
+            ps.setInt(6, piv.getId());
+            count = ps.executeUpdate();
+
+        } catch (Exception ex) {
+        } finally {
+            ps.close();
+            closeConnection(con);
+        }
+        return count;
     }
 
     @Override
