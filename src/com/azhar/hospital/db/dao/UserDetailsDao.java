@@ -28,7 +28,7 @@ public class UserDetailsDao extends Dao implements DaoList<UserDetailsVo> {
             userDetailsDao = new UserDetailsDao();
         }
         return userDetailsDao;
-    } 
+    }
 
     @Override
     public List<UserDetailsVo> loadAll() {
@@ -89,13 +89,15 @@ public class UserDetailsDao extends Dao implements DaoList<UserDetailsVo> {
             ps.setInt(4, udv.getUsersVo().getId());
             ps.executeUpdate();
 
-            String userDetailsSql = "UPDATE users_details SET FIRST_NAME=?, FATHER_NAME=?, MOBILE=?, IMAGE=? WHERE USER_ID=?";
+            String userDetailsSql = "UPDATE users_details SET FIRST_NAME=?, FATHER_NAME=?, MOBILE=?, IMAGE=?, SPECIALIZATION=? WHERE USER_ID=?";
             ps = con.prepareStatement(userDetailsSql);
             ps.setString(1, udv.getFirstName());
             ps.setString(2, udv.getFatherName());
             ps.setString(3, udv.getMobile());
             ps.setBytes(4, udv.getImage());
-            ps.setInt(5, udv.getUsersVo().getId());
+            ps.setString(5, udv.getSpecialization());
+            ps.setInt(6, udv.getUsersVo().getId());
+
             ps.executeUpdate();
             con.commit();
 
@@ -154,13 +156,13 @@ public class UserDetailsDao extends Dao implements DaoList<UserDetailsVo> {
         UsersVo usersVo = null;
         try {
             con = getConnection();
-        
+
             String userSql = "SELECT USERS.ID, USERS.USER_NAME, USERS.PASSWORD, USERS.USER_TYPE, USERS_DETAILS.FIRST_NAME, USERS_DETAILS.FATHER_NAME, USERS_DETAILS.MOBILE, USERS_DETAILS.IMAGE, USERS_DETAILS.SPECIALIZATION FROM USERS INNER JOIN USERS_DETAILS ON USERS.ID = USERS_DETAILS.USER_ID WHERE USERS.ID=?";
             ps = con.prepareStatement(userSql);
             ps.setInt(1, id);
             rs = ps.executeQuery();
-            
-            while(rs.next()) {
+
+            while (rs.next()) {
                 usersVo = new UsersVo();
                 userDetailsVo = new UserDetailsVo();
                 usersVo.setId(rs.getInt("ID"));
@@ -175,9 +177,7 @@ public class UserDetailsDao extends Dao implements DaoList<UserDetailsVo> {
                 userDetailsVo.setSpecialization(rs.getString("SPECIALIZATION"));
                 userDetailsVo.setUsersVo(usersVo);
             }
-            
 
-   
         } catch (Exception ex) {
         } finally {
             rs.close();
