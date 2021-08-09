@@ -28,7 +28,7 @@ public class UserDetailsDao extends Dao implements DaoList<UserDetailsVo> {
             userDetailsDao = new UserDetailsDao();
         }
         return userDetailsDao;
-    }
+    } 
 
     @Override
     public List<UserDetailsVo> loadAll() {
@@ -51,13 +51,14 @@ public class UserDetailsDao extends Dao implements DaoList<UserDetailsVo> {
             ps.setInt(4, udv.getUsersVo().getId());
             ps.executeUpdate();
 
-            String userDetailsSql = "INSERT INTO users_details (USER_ID, FIRST_NAME, FATHER_NAME, MOBILE,IMAGE) VALUES(?, ?, ?, ?, ?)";
+            String userDetailsSql = "INSERT INTO users_details (USER_ID, FIRST_NAME, FATHER_NAME, MOBILE, IMAGE, SPECIALIZATION) VALUES(?, ?, ?, ?, ?, ?)";
             ps = con.prepareStatement(userDetailsSql);
             ps.setInt(1, udv.getUsersVo().getId());
             ps.setString(2, udv.getFirstName());
             ps.setString(3, udv.getFatherName());
             ps.setString(4, udv.getMobile());
             ps.setBytes(5, udv.getImage());
+            ps.setString(6, udv.getSpecialization());
             ps.executeUpdate();
             con.commit();
 
@@ -154,7 +155,7 @@ public class UserDetailsDao extends Dao implements DaoList<UserDetailsVo> {
         try {
             con = getConnection();
         
-            String userSql = "SELECT USERS.ID, USERS.USER_NAME, USERS.PASSWORD, USERS.USER_TYPE, USERS_DETAILS.FIRST_NAME, USERS_DETAILS.FATHER_NAME, USERS_DETAILS.MOBILE, USERS_DETAILS.IMAGE FROM USERS INNER JOIN USERS_DETAILS ON USERS.ID = USERS_DETAILS.USER_ID WHERE USERS.ID=?";
+            String userSql = "SELECT USERS.ID, USERS.USER_NAME, USERS.PASSWORD, USERS.USER_TYPE, USERS_DETAILS.FIRST_NAME, USERS_DETAILS.FATHER_NAME, USERS_DETAILS.MOBILE, USERS_DETAILS.IMAGE, USERS_DETAILS.SPECIALIZATION FROM USERS INNER JOIN USERS_DETAILS ON USERS.ID = USERS_DETAILS.USER_ID WHERE USERS.ID=?";
             ps = con.prepareStatement(userSql);
             ps.setInt(1, id);
             rs = ps.executeQuery();
@@ -171,6 +172,7 @@ public class UserDetailsDao extends Dao implements DaoList<UserDetailsVo> {
                 userDetailsVo.setFatherName(rs.getString("FATHER_NAME"));
                 userDetailsVo.setMobile(rs.getString("MOBILE"));
                 userDetailsVo.setImage(rs.getBytes("IMAGE"));
+                userDetailsVo.setSpecialization(rs.getString("SPECIALIZATION"));
                 userDetailsVo.setUsersVo(usersVo);
             }
             

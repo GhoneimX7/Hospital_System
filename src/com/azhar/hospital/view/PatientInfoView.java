@@ -5,6 +5,14 @@
  */
 package com.azhar.hospital.view;
 
+import com.azhar.hospital.db.dao.PatientInfoDao;
+import com.azhar.hospital.db.vo.PatientInfoVo;
+import com.azhar.hospital.db.vo.UsersVo;
+import com.azhar.hospital.validation.Validation;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author fastox
@@ -65,6 +73,11 @@ public class PatientInfoView extends javax.swing.JFrame {
         });
 
         btnAdd.setText("ADD");
+        btnAdd.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAddActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -131,6 +144,54 @@ public class PatientInfoView extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtFirstNameActionPerformed
 
+    private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
+        boolean isTextEmpty = Validation.isEmpty(txtId.getText(), txtFirstName.getText(), txtFatherName.getText(), txtMobile.getText(), txtEmail.getText(), txtUserId.getText());
+        boolean isDigit = Validation.isDigit(txtId.getText(), txtMobile.getText(), txtUserId.getText());
+        boolean isText = Validation.isText(txtFirstName.getText(), txtFatherName.getText(), txtEmail.getText());
+        if (!isDigit || !isText) {
+            JOptionPane.showMessageDialog(null, "Please enter valid data");
+            return;
+        }
+        if (isTextEmpty) {
+            JOptionPane.showMessageDialog(null, "Please fill all required inputs");
+            return;
+        }
+        int userId = Integer.valueOf(txtUserId.getText());
+        UsersVo usersVo = new UsersVo();
+        usersVo.setId(userId);
+        int id = Integer.valueOf(txtId.getText());
+        String firstName = txtFirstName.getText();
+        String fatherName = txtFatherName.getText();
+        String mobile = txtMobile.getText();
+        String email = txtEmail.getText();
+        PatientInfoVo piv = new PatientInfoVo();
+        piv.setId(id);
+        piv.setFirstName(firstName);
+        piv.setFatherName(fatherName);
+        piv.setMobile(mobile);
+        piv.setEmail(email);
+        piv.setUsersVo(usersVo);
+        try {
+            int count = PatientInfoDao.getInstance().insert(piv);
+            if (count == 1) {
+                JOptionPane.showMessageDialog(null, "Insert Successfully!");
+                reset();
+            } else {
+                JOptionPane.showMessageDialog(null, "Insert not Successfully!");
+
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(UsersView.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnAddActionPerformed
+     protected void reset() {
+        txtId.setText("");
+        txtFirstName.setText("");
+        txtFatherName.setText("");
+        txtMobile.setText("");
+        txtUserId.setText("");
+        txtEmail.setText("");
+    }
     /**
      * @param args the command line arguments
      */

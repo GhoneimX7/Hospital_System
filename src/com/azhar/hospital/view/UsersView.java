@@ -66,6 +66,8 @@ public class UsersView extends javax.swing.JFrame {
         txtImagePath = new javax.swing.JTextField();
         btnSearch = new javax.swing.JButton();
         lblImage = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        cmbSpecialization = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -145,41 +147,50 @@ public class UsersView extends javax.swing.JFrame {
             }
         });
 
+        jLabel8.setText("Specialization");
+
+        cmbSpecialization.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "general" }));
+        cmbSpecialization.setSelectedIndex(-1);
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 1, Short.MAX_VALUE)
-                    .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(txtId)
-                    .addComponent(txtUserName)
-                    .addComponent(txtPassword)
-                    .addComponent(cUserType, 0, 197, Short.MAX_VALUE)
-                    .addComponent(txtFirstName)
-                    .addComponent(txtFatherName)
-                    .addComponent(txtMobile))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 69, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 1, Short.MAX_VALUE)
+                            .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(txtId)
+                            .addComponent(txtUserName)
+                            .addComponent(txtPassword)
+                            .addComponent(cUserType, 0, 197, Short.MAX_VALUE)
+                            .addComponent(txtFirstName)
+                            .addComponent(txtFatherName)
+                            .addComponent(txtMobile))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 347, Short.MAX_VALUE)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(btnDelete, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(btnUpdate, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(btnChooseImage, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txtImagePath)
-                            .addComponent(btnSearch, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(btnSearch, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(22, 22, 22))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel8)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(cmbSpecialization, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(lblImage, javax.swing.GroupLayout.PREFERRED_SIZE, 378, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap())))
         );
@@ -215,7 +226,11 @@ public class UsersView extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel7)
-                            .addComponent(txtMobile, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(txtMobile, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel8)
+                            .addComponent(cmbSpecialization, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(35, 35, 35)
                         .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -306,7 +321,7 @@ public class UsersView extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         boolean isTextEmpty = Validation.isEmpty(txtId.getText(), txtUserName.getText(), txtPassword.getText(), txtFirstName.getText(), txtFatherName.getText(), txtMobile.getText());
-        boolean isEmpty = Validation.isEmpty(cUserType.getSelectedIndex());
+        boolean isEmpty = Validation.isEmpty(cUserType.getSelectedIndex(), cmbSpecialization.getSelectedIndex());
         boolean isDigit = Validation.isDigit(txtId.getText(), txtMobile.getText());
         boolean isText = Validation.isText(txtUserName.getText(), txtPassword.getText(), txtFirstName.getText(), txtFatherName.getText());
         if (!isDigit || !isText) {
@@ -329,12 +344,14 @@ public class UsersView extends javax.swing.JFrame {
         String firstName = txtFirstName.getText();
         String fatherName = txtFatherName.getText();
         String mobile = txtMobile.getText();
+        String specialization = cmbSpecialization.getSelectedItem().toString();
         UserDetailsVo userDetailsVo = new UserDetailsVo();
         userDetailsVo.setUsersVo(usersVo);
         userDetailsVo.setFirstName(firstName);
         userDetailsVo.setFatherName(fatherName);
         userDetailsVo.setMobile(mobile);
         userDetailsVo.setImage(imageByte);
+        userDetailsVo.setSpecialization(specialization);
 
         try {
             UsersVo uv = UsersDao.getInstance().getDataById(id);
@@ -426,7 +443,6 @@ public class UsersView extends javax.swing.JFrame {
     }//GEN-LAST:event_btnChooseImageActionPerformed
 
     private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
-        int id = Integer.valueOf(txtId.getText());
         boolean isTextEmpty = Validation.isEmpty(txtId.getText());
         boolean isDigit = Validation.isDigit(txtId.getText());
         if (!isDigit) {
@@ -437,6 +453,8 @@ public class UsersView extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Please fill all required inputs");
             return;
         }
+        int id = Integer.valueOf(txtId.getText());
+
         try {
             UserDetailsVo userDetailsVo = UserDetailsDao.getInstance().getDataById(id);
             if (userDetailsVo == null) {
@@ -448,9 +466,10 @@ public class UsersView extends javax.swing.JFrame {
                 txtFatherName.setText(userDetailsVo.getFatherName());
                 txtMobile.setText(userDetailsVo.getMobile());
                 txtPassword.setText(userDetailsVo.getUsersVo().getPassword());
-                cUserType.setSelectedIndex(userDetailsVo.getUsersVo().getUsersType().getId()-1);
+                cUserType.setSelectedIndex(userDetailsVo.getUsersVo().getUsersType().getId() - 1);
                 ImageIcon imageIcon = new ImageIcon(userDetailsVo.getImage());
                 lblImage.setIcon(imageIcon);
+                cmbSpecialization.setSelectedItem(userDetailsVo.getSpecialization());
             }
         } catch (Exception ex) {
             Logger.getLogger(UsersView.class.getName()).log(Level.SEVERE, null, ex);
@@ -467,6 +486,7 @@ public class UsersView extends javax.swing.JFrame {
         cUserType.setSelectedIndex(-1);
         txtImagePath.setText("");
         lblImage.setIcon(null);
+        cmbSpecialization.setSelectedIndex(-1);
     }
 
     /**
@@ -510,6 +530,7 @@ public class UsersView extends javax.swing.JFrame {
     private javax.swing.JButton btnSearch;
     private javax.swing.JButton btnUpdate;
     private javax.swing.JComboBox<String> cUserType;
+    private javax.swing.JComboBox<String> cmbSpecialization;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -518,6 +539,7 @@ public class UsersView extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel lblImage;
     private javax.swing.JTextField txtFatherName;

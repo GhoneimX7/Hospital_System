@@ -11,6 +11,7 @@ public class UserDetailsVo {
     private String fatherName;
     private String mobile;
     private byte[] image;
+    private String specialization;
 
     public byte[] getImage() {
         return image;
@@ -58,6 +59,14 @@ public class UserDetailsVo {
 
     public void setMobile(String mobile) {
         this.mobile = mobile;
+    }
+
+    public String getSpecialization() {
+        return specialization;
+    }
+
+    public void setSpecialization(String specialization) {
+        this.specialization = specialization;
     }
     
 }
