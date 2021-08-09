@@ -6,8 +6,10 @@
 package com.azhar.hospital.db.dao;
 
 import com.azhar.hospital.db.vo.PatientInfoVo;
+import com.azhar.hospital.db.vo.UsersVo;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.util.List;
 
 /**
@@ -65,8 +67,22 @@ public class PatientInfoDao extends Dao implements DaoList<PatientInfoVo> {
     }
 
     @Override
-    public int Delete(PatientInfoVo t) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public int Delete(PatientInfoVo piv) throws Exception {
+        Connection con = null;
+        PreparedStatement ps = null;
+        int count = 0;
+        try {
+            con = getConnection();
+            String sql = "DELETE FROM PATIENT_INFO WHERE ID=?";
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, piv.getId());
+            count = ps.executeUpdate();
+        } catch (Exception ex) {
+        } finally {
+            ps.close();
+            closeConnection(con);
+        }
+        return count;
     }
 
     @Override
@@ -76,7 +92,38 @@ public class PatientInfoDao extends Dao implements DaoList<PatientInfoVo> {
 
     @Override
     public PatientInfoVo getDataById(int id) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+        Connection con = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        PatientInfoVo patientInfoVo = null;
+        UsersVo usersVo = null;
+        try {
+            con = getConnection();
+            String sql = "SELECT * FROM patient_info WHERE ID=?";
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, id);
+            rs = ps.executeQuery();
 
+            while (rs.next()) {
+                patientInfoVo = new PatientInfoVo();
+                usersVo = new UsersVo();
+                usersVo.setId(rs.getInt("USER_ID"));
+
+                patientInfoVo.setId(rs.getInt("ID"));
+                patientInfoVo.setFirstName(rs.getString("FIRST_NAME"));
+                patientInfoVo.setFatherName(rs.getString("FATHER_NAME"));
+                patientInfoVo.setMobile(rs.getString("MOBILE"));
+                patientInfoVo.setEmail(rs.getString("EMAIL"));
+                patientInfoVo.setUsersVo(usersVo);
+            }
+
+        } catch (Exception ex) {
+        } finally {
+            rs.close();
+            ps.close();
+            closeConnection(con);
+        }
+        return patientInfoVo;
+
+    }
 }

@@ -7,6 +7,7 @@ package com.azhar.hospital.view;
 
 import com.azhar.hospital.db.dao.PatientInfoDao;
 import com.azhar.hospital.db.vo.PatientInfoVo;
+import com.azhar.hospital.db.vo.UserDetailsVo;
 import com.azhar.hospital.db.vo.UsersVo;
 import com.azhar.hospital.validation.Validation;
 import java.util.logging.Level;
@@ -50,6 +51,7 @@ public class PatientInfoView extends javax.swing.JFrame {
         txtEmail = new javax.swing.JTextField();
         txtUserId = new javax.swing.JTextField();
         btnAdd = new javax.swing.JButton();
+        btnDelete = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -79,6 +81,13 @@ public class PatientInfoView extends javax.swing.JFrame {
             }
         });
 
+        btnDelete.setText("Delete");
+        btnDelete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeleteActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -103,7 +112,9 @@ public class PatientInfoView extends javax.swing.JFrame {
                             .addComponent(txtEmail)
                             .addComponent(txtUserId, javax.swing.GroupLayout.DEFAULT_SIZE, 207, Short.MAX_VALUE))
                         .addGap(105, 105, 105)
-                        .addComponent(btnAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(btnAdd, javax.swing.GroupLayout.DEFAULT_SIZE, 79, Short.MAX_VALUE)
+                            .addComponent(btnDelete, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap(103, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -117,7 +128,8 @@ public class PatientInfoView extends javax.swing.JFrame {
                 .addGap(9, 9, 9)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtFirstName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2))
+                    .addComponent(jLabel2)
+                    .addComponent(btnDelete))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
@@ -184,6 +196,41 @@ public class PatientInfoView extends javax.swing.JFrame {
             Logger.getLogger(UsersView.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btnAddActionPerformed
+
+    private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
+        boolean isTextEmpty = Validation.isEmpty(txtId.getText());
+        boolean isDigit = Validation.isDigit(txtId.getText());
+        if (!isDigit) {
+            JOptionPane.showMessageDialog(null, "Please enter valid data");
+            return;
+        }
+        if (isTextEmpty) {
+            JOptionPane.showMessageDialog(null, "Please fill all required inputs");
+            return;
+        }
+        int id = Integer.valueOf(txtId.getText());
+        PatientInfoVo patientInfoVo = new PatientInfoVo();
+        patientInfoVo.setId(id);
+
+        try {
+            PatientInfoVo piv = PatientInfoDao.getInstance().getDataById(id);
+            if (piv == null) {
+                JOptionPane.showMessageDialog(null, "Id not found!");
+                return;
+            }
+            int count = PatientInfoDao.getInstance().Delete(patientInfoVo);
+            if (count == 1) {
+                JOptionPane.showMessageDialog(null, "Delete Successfully!");
+                reset();
+            } else {
+                JOptionPane.showMessageDialog(null, "Delete not Successfully!");
+
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(UsersView.class.getName()).log(Level.SEVERE, null, ex);
+        
+    }                                       
+    }//GEN-LAST:event_btnDeleteActionPerformed
      protected void reset() {
         txtId.setText("");
         txtFirstName.setText("");
@@ -229,6 +276,7 @@ public class PatientInfoView extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAdd;
+    private javax.swing.JButton btnDelete;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
