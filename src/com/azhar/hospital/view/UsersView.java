@@ -92,7 +92,7 @@ public class UsersView extends javax.swing.JFrame {
 
         jLabel4.setText("User Type");
 
-        cUserType.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "admin", "doctor", "nurse" }));
+        cUserType.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "admin", "doctor", "nurse", "reception" }));
         cUserType.setSelectedIndex(-1);
         cUserType.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

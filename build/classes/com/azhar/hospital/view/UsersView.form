@@ -195,10 +195,11 @@
         <Component class="javax.swing.JComboBox" name="cUserType">
           <Properties>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-              <StringArray count="3">
+              <StringArray count="4">
                 <StringItem index="0" value="admin"/>
                 <StringItem index="1" value="doctor"/>
                 <StringItem index="2" value="nurse"/>
+                <StringItem index="3" value="reception"/>
               </StringArray>
             </Property>
             <Property name="selectedIndex" type="int" value="-1"/>

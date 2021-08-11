@@ -5,11 +5,14 @@
  */
 package com.azhar.hospital.view;
 
+import com.azhar.hospital.db.vo.UsersVo;
+
 /**
  *
  * @author fastox
  */
 public class Home extends javax.swing.JFrame {
+    public static UsersVo usersVo;
 
     /**
      * Creates new form Home

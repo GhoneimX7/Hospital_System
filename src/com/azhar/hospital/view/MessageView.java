@@ -5,6 +5,16 @@
  */
 package com.azhar.hospital.view;
 
+import com.azhar.hospital.db.dao.MessageDao;
+import com.azhar.hospital.db.vo.MessageVo;
+import com.azhar.hospital.db.vo.PatientInfoVo;
+import com.azhar.hospital.db.vo.UsersVo;
+import com.azhar.hospital.validation.Validation;
+import java.sql.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author User
@@ -33,8 +43,6 @@ public class MessageView extends javax.swing.JFrame {
         txtPatientId = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         txtToUser = new javax.swing.JTextField();
-        jLabel3 = new javax.swing.JLabel();
-        txtFromUser = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         txtMessageDate = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
@@ -56,8 +64,6 @@ public class MessageView extends javax.swing.JFrame {
 
         jLabel2.setText("To user");
 
-        jLabel3.setText("jLabel3");
-
         jLabel4.setText("Message date");
 
         jLabel5.setText("Message body");
@@ -67,6 +73,11 @@ public class MessageView extends javax.swing.JFrame {
         jScrollPane1.setViewportView(txtMessageBody);
 
         btnSend.setText("Send");
+        btnSend.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSendActionPerformed(evt);
+            }
+        });
 
         btnGetMessage.setText("Get message");
 
@@ -79,14 +90,12 @@ public class MessageView extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
                     .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(txtPatientId)
                     .addComponent(txtToUser)
-                    .addComponent(txtFromUser)
                     .addComponent(txtMessageDate)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE))
                 .addGap(51, 51, 51)
@@ -110,19 +119,16 @@ public class MessageView extends javax.swing.JFrame {
                         .addComponent(txtToUser, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(btnGetMessage, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtMessageDate, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtFromUser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(txtMessageDate, javax.swing.GroupLayout.DEFAULT_SIZE, 25, Short.MAX_VALUE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(28, 28, 28)
-                        .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(47, 47, 47)
+                        .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(97, Short.MAX_VALUE))
         );
 
@@ -141,8 +147,58 @@ public class MessageView extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void txtPatientIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPatientIdActionPerformed
-        // TODO add your handling code here:
+        boolean isTextEmpty = Validation.isEmpty(txtToUser.getText(), txtPatientId.getText(), txtMessageDate.getText(), txtMessageBody.getText());
+        boolean isDigit = Validation.isDigit(txtToUser.getText(), txtPatientId.getText());
+        boolean isText = Validation.isText(txtMessageBody.getText());
+        if (!isDigit || !isText) {
+            JOptionPane.showMessageDialog(null, "Please enter valid data");
+            return;
+        }
+        if (isTextEmpty) {
+            JOptionPane.showMessageDialog(null, "Please fill all required inputs");
+            return;
+        }
+        int patientId = Integer.parseInt(txtPatientId.getText());
+        int to = Integer.parseInt(txtToUser.getText());
+        int from = Home.usersVo.getId();
+        Date messageDate = Date.valueOf(txtMessageDate.getText());
+        String messageBody = txtMessageBody.getText();
+        MessageVo messageVo = new MessageVo();
+        UsersVo fromUser = new UsersVo();
+        UsersVo toUser = new UsersVo();
+        PatientInfoVo patientInfoVo = new PatientInfoVo();
+        messageVo.setMessageBody(messageBody);
+        messageVo.setMessageDate(messageDate);
+        fromUser.setId(from);
+        messageVo.setFromUser(fromUser);
+        toUser.setId(to);
+        messageVo.setToUser(toUser);
+        patientInfoVo.setId(patientId);
+        messageVo.setPatientInfoVo(patientInfoVo);
+
+        try {
+            int count = MessageDao.getInstance().insert(messageVo);
+
+            if (count == 1) {
+                JOptionPane.showMessageDialog(null, "Insert Successfully!");
+                reset();
+            } else {
+                JOptionPane.showMessageDialog(null, "Insert is not Successfully!");
+
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(UsersView.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_txtPatientIdActionPerformed
+    protected void reset() {
+        txtMessageBody.setText("");
+        txtMessageDate.setText("");
+        txtPatientId.setText("");
+        txtToUser.setText("");
+    }
+    private void btnSendActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSendActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnSendActionPerformed
 
     /**
      * @param args the command line arguments
@@ -184,12 +240,10 @@ public class MessageView extends javax.swing.JFrame {
     private javax.swing.JButton btnSend;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField txtFromUser;
     private javax.swing.JTextArea txtMessageBody;
     private javax.swing.JTextField txtMessageDate;
     private javax.swing.JTextField txtPatientId;

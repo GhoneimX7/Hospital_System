@@ -1,7 +1,7 @@
 package com.azhar.hospital.db.type;
 
 public enum UsersType {
-    ADMIN(1, "admin"), DOCTOR(2, "doctor"), NURSE(3, "nurse");
+    ADMIN(1, "admin"), DOCTOR(2, "doctor"), NURSE(3, "nurse"), RECEPTION(4, "reception");
     private int id;
 
     public int getId() {
