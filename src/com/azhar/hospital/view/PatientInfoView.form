@@ -52,6 +52,7 @@
                   <Component id="btnAdd" pref="79" max="32767" attributes="0"/>
                   <Component id="btnDelete" max="32767" attributes="0"/>
                   <Component id="btnEdit" max="32767" attributes="0"/>
+                  <Component id="btnSearch" max="32767" attributes="0"/>
               </Group>
               <EmptySpace pref="103" max="32767" attributes="0"/>
           </Group>
@@ -89,6 +90,7 @@
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="jLabel4" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="txtMobile" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="btnSearch" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
@@ -173,6 +175,14 @@
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnEditActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="btnSearch">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Search"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnSearchActionPerformed"/>
       </Events>
     </Component>
   </SubComponents>

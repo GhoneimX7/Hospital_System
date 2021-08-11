@@ -53,6 +53,7 @@ public class PatientInfoView extends javax.swing.JFrame {
         btnAdd = new javax.swing.JButton();
         btnDelete = new javax.swing.JButton();
         btnEdit = new javax.swing.JButton();
+        btnSearch = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -96,6 +97,13 @@ public class PatientInfoView extends javax.swing.JFrame {
             }
         });
 
+        btnSearch.setText("Search");
+        btnSearch.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSearchActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -123,7 +131,8 @@ public class PatientInfoView extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(btnAdd, javax.swing.GroupLayout.DEFAULT_SIZE, 79, Short.MAX_VALUE)
                     .addComponent(btnDelete, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnEdit, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(btnEdit, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnSearch, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(103, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -151,7 +160,8 @@ public class PatientInfoView extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(txtMobile, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtMobile, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnSearch))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
@@ -291,6 +301,36 @@ public class PatientInfoView extends javax.swing.JFrame {
             Logger.getLogger(UsersView.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btnEditActionPerformed
+
+    private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
+        boolean isTextEmpty = Validation.isEmpty(txtId.getText());
+        boolean isDigit = Validation.isDigit(txtId.getText());
+        if (!isDigit) {
+            JOptionPane.showMessageDialog(null, "Please enter valid ID");
+            return;
+        }
+        if (isTextEmpty) {
+            JOptionPane.showMessageDialog(null, "Please fill all required inputs");
+            return;
+        }
+        int id = Integer.valueOf(txtId.getText());
+
+        try {
+            PatientInfoVo patientInfoVo = PatientInfoDao.getInstance().getDataById(id);
+            if (patientInfoVo == null) {
+                JOptionPane.showMessageDialog(null, "ID not exist!");
+                reset();
+            } else {
+                txtFirstName.setText(patientInfoVo.getFirstName());
+                txtFatherName.setText(patientInfoVo.getFatherName());
+                txtMobile.setText(patientInfoVo.getMobile());
+                txtEmail.setText(patientInfoVo.getEmail());
+                txtUserId.setText(String.valueOf(patientInfoVo.getUsersVo().getId()));
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(UsersView.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnSearchActionPerformed
     protected void reset() {
         txtId.setText("");
         txtFirstName.setText("");
@@ -339,6 +379,7 @@ public class PatientInfoView extends javax.swing.JFrame {
     private javax.swing.JButton btnAdd;
     private javax.swing.JButton btnDelete;
     private javax.swing.JButton btnEdit;
+    private javax.swing.JButton btnSearch;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
