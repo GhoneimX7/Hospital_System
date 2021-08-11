@@ -38,8 +38,27 @@ public class MessageDao extends Dao implements DaoList<MessageVo> {
     }
 
     @Override
-    public int insert(MessageVo t) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public int insert(MessageVo mv) throws Exception {
+        Connection con = null;
+        PreparedStatement ps = null;
+        int count = 0;
+
+        try {
+            con = getConnection();
+            String sql = "INSERT INTO MESSAGES(MESSAGE_BODY, MESSAGE_DATE, FROM_USER, TO_USER, PATIENT_ID) VALUES(?,?,?,?,?)";
+            ps = con.prepareStatement(sql);
+            ps.setString(1, mv.getMessageBody());
+            ps.setDate(2, mv.getMessageDate());
+            ps.setInt(3, mv.getFromUser().getId());
+            ps.setInt(4, mv.getToUser().getId());
+            ps.setInt(5, mv.getPatientInfoVo().getId());
+            count = ps.executeUpdate();
+        } catch (Exception ex) {
+        } finally {
+            ps.close();
+            closeConnection(con);
+        }
+        return count;
     }
 
     @Override
