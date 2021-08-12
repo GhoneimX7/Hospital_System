@@ -28,11 +28,13 @@ public class MessageView extends javax.swing.JFrame {
     /**
      * Creates new form MessageView
      */
+    DateFormat d;
+    java.util.Date messageDate;
     public MessageView() {
         initComponents();
         this.setLocationRelativeTo(null);
-        DateFormat d = new SimpleDateFormat("yyyy-mm-dd");
-        java.util.Date messageDate = Calendar.getInstance().getTime();
+        d = new SimpleDateFormat("yyyy-mm-dd");
+        messageDate = Calendar.getInstance().getTime();
         txtMessageDate.setText(d.format(messageDate));
         txtMessageDate.setEditable(false);
     }
@@ -209,7 +211,7 @@ public class MessageView extends javax.swing.JFrame {
     }//GEN-LAST:event_txtPatientIdActionPerformed
     protected void reset() {
         txtMessageBody.setText("");
-        txtMessageDate.setText("");
+        txtMessageDate.setText(d.format(messageDate));
         txtPatientId.setText("");
         txtToUser.setText("");
     }
@@ -220,6 +222,7 @@ public class MessageView extends javax.swing.JFrame {
     private void btnNewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNewActionPerformed
         // TODO add your handling code here:
         reset();
+        
     }//GEN-LAST:event_btnNewActionPerformed
 
     /**
