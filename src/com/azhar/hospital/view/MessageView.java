@@ -11,6 +11,10 @@ import com.azhar.hospital.db.vo.PatientInfoVo;
 import com.azhar.hospital.db.vo.UsersVo;
 import com.azhar.hospital.validation.Validation;
 import java.sql.Date;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -27,6 +31,10 @@ public class MessageView extends javax.swing.JFrame {
     public MessageView() {
         initComponents();
         this.setLocationRelativeTo(null);
+        DateFormat d = new SimpleDateFormat("yyyy-mm-dd");
+        java.util.Date messageDate = Calendar.getInstance().getTime();
+        txtMessageDate.setText(d.format(messageDate));
+        txtMessageDate.setEditable(false);
     }
 
     /**
