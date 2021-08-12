@@ -12,14 +12,49 @@ import com.azhar.hospital.db.vo.UsersVo;
  * @author fastox
  */
 public class Home extends javax.swing.JFrame {
+
     public static UsersVo usersVo;
 
     /**
      * Creates new form Home
      */
+    public Home(UsersVo usersVo) {
+        initComponents();
+        this.setLocationRelativeTo(null);
+        this.usersVo = usersVo;
+        getUserLevel();
+    }
+
     public Home() {
         initComponents();
         this.setLocationRelativeTo(null);
+        getUserLevel();
+    }
+
+    protected void getUserLevel() {
+        switch (usersVo.getUsersType().getType()) {
+            case "admin":
+                mDoctor.setEnabled(false);
+                mReceptionist.setEnabled(false);
+                mNurse.setEnabled(false);
+                break;
+            case "doctor":
+                mAdmin.setEnabled(false);
+                mReceptionist.setEnabled(false);
+                mNurse.setEnabled(false);
+                break;
+            case "nurse":
+                mAdmin.setEnabled(false);
+                mReceptionist.setEnabled(false);
+                mDoctor.setEnabled(false);
+                break;
+            case "reception":
+                mAdmin.setEnabled(false);
+                mNurse.setEnabled(false);
+                mDoctor.setEnabled(false);
+                break;
+
+        }
     }
 
     /**
@@ -33,18 +68,19 @@ public class Home extends javax.swing.JFrame {
 
         jLabel2 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
-        jMenu1 = new javax.swing.JMenu();
+        mAdmin = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
-        jMenu2 = new javax.swing.JMenu();
-        jMenu3 = new javax.swing.JMenu();
+        mDoctor = new javax.swing.JMenu();
+        mNurse = new javax.swing.JMenu();
+        mReceptionist = new javax.swing.JMenu();
         jMenuItem2 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
 
-        jLabel2.setIcon(new javax.swing.ImageIcon("/home/fastox/PROJECTS/java/Hospital_System/images/background.jpg")); // NOI18N
+        jLabel2.setIcon(new javax.swing.ImageIcon("F:\\Programming\\Java\\Projects\\Hospital_System\\images\\background.jpg")); // NOI18N
 
-        jMenu1.setText("Admin");
+        mAdmin.setText("Admin");
 
         jMenuItem1.setText("Add new user");
         jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
@@ -52,14 +88,17 @@ public class Home extends javax.swing.JFrame {
                 jMenuItem1ActionPerformed(evt);
             }
         });
-        jMenu1.add(jMenuItem1);
+        mAdmin.add(jMenuItem1);
 
-        jMenuBar1.add(jMenu1);
+        jMenuBar1.add(mAdmin);
 
-        jMenu2.setText("Edit");
-        jMenuBar1.add(jMenu2);
+        mDoctor.setText("Doctor");
+        jMenuBar1.add(mDoctor);
 
-        jMenu3.setText("Receptionist");
+        mNurse.setText("Nurse");
+        jMenuBar1.add(mNurse);
+
+        mReceptionist.setText("Receptionist");
 
         jMenuItem2.setText("Patient Info");
         jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
@@ -67,9 +106,9 @@ public class Home extends javax.swing.JFrame {
                 jMenuItem2ActionPerformed(evt);
             }
         });
-        jMenu3.add(jMenuItem2);
+        mReceptionist.add(jMenuItem2);
 
-        jMenuBar1.add(jMenu3);
+        jMenuBar1.add(mReceptionist);
 
         setJMenuBar(jMenuBar1);
 
@@ -77,15 +116,13 @@ public class Home extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 1149, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 1027, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 654, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 680, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         pack();
@@ -138,11 +175,12 @@ public class Home extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenu jMenu2;
-    private javax.swing.JMenu jMenu3;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JMenu mAdmin;
+    private javax.swing.JMenu mDoctor;
+    private javax.swing.JMenu mNurse;
+    private javax.swing.JMenu mReceptionist;
     // End of variables declaration//GEN-END:variables
 }

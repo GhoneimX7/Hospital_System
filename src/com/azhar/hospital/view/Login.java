@@ -113,7 +113,7 @@ public class Login extends javax.swing.JFrame {
             if (uv == null) {
                 JOptionPane.showMessageDialog(null, "Enter valid username and password!");
             } else {
-                Home home = new Home();
+                Home home = new Home(uv);
                 Home.usersVo = uv;
                 home.setVisible(true);
                 this.setVisible(false);
